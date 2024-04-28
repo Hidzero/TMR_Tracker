@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
     container_button: {
       height: 60,
       padding: 10,
+      marginTop: 20,
       backgroundColor: "rgba(0, 0, 0, 0.7)",
       borderRadius: 12,
       justifyContent: 'center',
@@ -149,6 +150,7 @@ const styles = StyleSheet.create({
     squares: {
       width: square_size,
       height: square_size,
+      
     },
     container_item_button: {
       width: square_size - 30,
@@ -178,7 +180,41 @@ const styles = StyleSheet.create({
       textAlign: 'center',
       marginBottom: 10,
       display: text,
-    })
+    }),
+    container_square_button:{
+      padding: 20,
+      margin: 20,
+      width: square_size ,
+      height: square_size,
+      backgroundColor: "rgba(0, 0, 0, 0.7)",
+      borderRadius: 12,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    container_squares:{
+      flexDirection: 'row',
+    },
+    container_square_text:{
+      color: 'white',
+      fontSize: 20,
+      textAlign: 'center',
+    },
+    margin_button:{
+      marginTop: 20,
+    },
+    carContainer: {
+      marginBottom: 10,
+      backgroundColor: 'gray',
+      height: 80,
+      justifyContent: 'center',
+      padding: 10,
+      borderRadius: 10,
+    },
+    textCarContainer: {
+      color: 'white',
+      fontSize: 20,
+      fontWeight: 'bold',
+    },
   });
   
 export { styles };

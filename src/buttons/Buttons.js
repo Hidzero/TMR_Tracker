@@ -55,3 +55,12 @@ export function ButtonHome({onPress, text, icon}) {
     );
 }
 
+export function SquareButton({onPress, text}) {
+    return (
+        <TouchableOpacity style={styles.container_square_button} onPress={onPress}>
+            <Text style={styles.container_square_text}>{text}</Text>
+        </TouchableOpacity>
+    );
+}
+
+

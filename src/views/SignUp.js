@@ -15,7 +15,7 @@ export default function SignUp({ navigation: { navigate }}) {
             email: email,
             password: password
         }
-        await axios.post('http://10.0.2.2:3000/user', data)
+        await axios.post('http://192.168.0.110:3000/user', data)
         .then(res => {
             console.log(res.data);
             navigate("Sign In")
@@ -45,6 +45,7 @@ export default function SignUp({ navigation: { navigate }}) {
                     placeholderTextColor={"black"}
                     value={email}
                     onChangeText={setEmail}
+                    autoCapitalize='none'
                 />
                 <TextInput 
                     style={styles.sign_up_login_input} 
@@ -53,6 +54,7 @@ export default function SignUp({ navigation: { navigate }}) {
                     placeholderTextColor={"black"}
                     value={password}
                     onChangeText={setPassword}
+                    autoCapitalize='none'
                 />
                 <EnterButton title="Cadastrar" value={Cadastrar} onPress={handleSignUp} />
                 

@@ -1,11 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, TextInput, Image, ImageBackground, KeyboardAvoidingView, Text } from 'react-native';
 import { styles } from '../../assets/css/Css';
 import icon from '../../assets/img/icon.png';
 import { EnterButton, SignInButton, KeepMeLogged, ForgotPassword } from '../buttons/Buttons';
+import axios from 'axios';
 
 export default function SignIn({props, navigation: { navigate }}) {
     const [display, setDisplay] = ['none']
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    async function handleSignIn() {
+        const data = {
+            email: email,
+            password: password
+        }
+        await axios.post('http://192.168.0.110:3000/user/login', data)
+        .then(() => {
+            navigate("Crud Window")
+            alert('Login efetuado com sucesso')
+        })
+        .catch(err => {
+            console.log(err)
+            setDisplay('flex')
+        })
+    }
     const Entrar = 'Entrar'
     return (
         <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -15,26 +34,30 @@ export default function SignIn({props, navigation: { navigate }}) {
                 </View>
 
                     <View style={styles.container_login}>
-                        <View>
+                        <View style={{display: display}}>
                             <Text style={styles.invalid_login}>Usuario ou senha invalida!</Text>
                         </View>
                         <TextInput 
                             style={styles.login_input} 
                             placeholder="e-mail"
                             placeholderTextColor={"black"}
-                            name="email"
+                            value={email}
+                            onChangeText={setEmail}
+                            autoCapitalize='none'
                         />
                         <TextInput 
                             style={styles.login_input} 
                             placeholder="senha" 
                             secureTextEntry={true} 
                             placeholderTextColor={"black"}
-                            name="password"
+                            value={password}
+                            onChangeText={setPassword}
+                            autoCapitalize='none'
                         />
                     <ForgotPassword title="Esqueceu a senha" onPress={() => navigate("Forgot Password")}/>
                         <KeepMeLogged />
                     <View style={styles.container_login2}>
-                        <EnterButton title="Entrar" value={Entrar} onPress={() => navigate("Home")} />
+                        <EnterButton title="Entrar" value={Entrar} onPress={handleSignIn} />
                         <SignInButton title="Cadastre-se!" onPress={() => navigate("Sign Up")} />
                     </View>
                     </View>

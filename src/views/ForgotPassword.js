@@ -23,6 +23,7 @@ export default function ForgotPassword() {
                         style={styles.forgot_email_input} 
                         placeholder="e-mail"
                         placeholderTextColor={"black"}
+                        autoCapitalize='none'
                     />
                     <EnterButton onPress={handleSendEmail} title="Enviar" value={Enviar} />
                 </>
