@@ -1,0 +1,44 @@
+import React from 'react';
+import { View, TextInput, Image, ImageBackground, KeyboardAvoidingView, Text } from 'react-native';
+import { styles } from '../../assets/css/Css';
+import icon from '../../assets/img/icon.png';
+import { EnterButton, SignInButton, KeepMeLogged, ForgotPassword } from '../buttons/Buttons';
+
+export default function SignIn({props, navigation: { navigate }}) {
+    const [display, setDisplay] = ['none']
+    const Entrar = 'Entrar'
+    return (
+        <KeyboardAvoidingView behavior="padding" style={styles.container}>
+            <ImageBackground style={styles.bg_image} source={{uri: 'https://img.freepik.com/vetores-gratis/fundo-futurista-abstrato-baixo-poli_1048-10122.jpg?t=st=1713721981~exp=1713725581~hmac=9463d7eb58c4d260dbd075db9a6a0a42ae5d05a266088d8b9b3fe35e88161e91'}}>
+                <View style={styles.container_top_login}>
+                    <Image source={icon} style={styles.logo_login} />
+                </View>
+
+                    <View style={styles.container_login}>
+                        <View>
+                            <Text style={styles.invalid_login}>Usuario ou senha invalida!</Text>
+                        </View>
+                        <TextInput 
+                            style={styles.login_input} 
+                            placeholder="e-mail"
+                            placeholderTextColor={"black"}
+                            name="email"
+                        />
+                        <TextInput 
+                            style={styles.login_input} 
+                            placeholder="senha" 
+                            secureTextEntry={true} 
+                            placeholderTextColor={"black"}
+                            name="password"
+                        />
+                    <ForgotPassword title="Esqueceu a senha" onPress={() => navigate("Forgot Password")}/>
+                        <KeepMeLogged />
+                    <View style={styles.container_login2}>
+                        <EnterButton title="Entrar" value={Entrar} onPress={() => navigate("Home")} />
+                        <SignInButton title="Cadastre-se!" onPress={() => navigate("Sign Up")} />
+                    </View>
+                    </View>
+            </ImageBackground>
+        </KeyboardAvoidingView>
+    );
+}
