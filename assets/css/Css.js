@@ -134,7 +134,10 @@ const styles = StyleSheet.create({
       padding: 15,
       color: "#808080",
       fontSize: 20,
-      marginBottom: 30,
+    },
+    eye_icon: {
+      position: 'absolute',
+      right: 10,
     },
     container_flex: {
       flex: 1,

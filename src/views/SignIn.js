@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, TextInput, Image, ImageBackground, KeyboardAvoidingView, Text } from 'react-native';
+import { View, TextInput, Image, ImageBackground, KeyboardAvoidingView, Text, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import { styles } from '../../assets/css/Css';
 import icon from '../../assets/img/icon.png';
 import { EnterButton, SignInButton, KeepMeLogged, ForgotPassword } from '../buttons/Buttons';
@@ -13,6 +14,7 @@ export default function SignIn({props, navigation: { navigate }}) {
     const [display, setDisplay] = ['none']
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [passwordVisible, setPasswordVisible] = useState(false);
 
     async function handleSignIn() {
         const data = {
@@ -64,15 +66,20 @@ export default function SignIn({props, navigation: { navigate }}) {
                             onChangeText={setEmail}
                             autoCapitalize='none'
                         />
-                        <TextInput 
-                            style={styles.login_input} 
-                            placeholder="senha" 
-                            secureTextEntry={true} 
-                            placeholderTextColor={"black"}
-                            value={password}
-                            onChangeText={setPassword}
-                            autoCapitalize='none'
-                        />
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <TextInput
+                    style={[styles.sign_up_login_input, { flex: 1 }]}
+                    placeholder="senha"
+                    secureTextEntry={!passwordVisible}
+                    placeholderTextColor={"black"}
+                    value={password}
+                    onChangeText={setPassword}
+                    autoCapitalize='none'
+                />
+                <TouchableOpacity onPress={() => setPasswordVisible(!passwordVisible)} style={styles.eye_icon}>
+                    <Icon name={passwordVisible ? 'eye-slash' : 'eye'} size={24} color="grey" />
+                </TouchableOpacity>
+            </View>
                     <ForgotPassword title="Esqueceu a senha" onPress={() => navigate("Forgot Password")}/>
                         <KeepMeLogged />
                     <View style={styles.container_login2}>
