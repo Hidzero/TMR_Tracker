@@ -3,6 +3,7 @@ import { View, TextInput, Text, Alert } from "react-native";
 import { styles } from "../../assets/css/Css";
 import { EnterButton } from '../buttons/Buttons';
 import axios from 'axios';
+import { IP, PORT } from '@env';
 
 export default function DeleteCar() {
     const [cars, setCars] = useState([]);
@@ -13,7 +14,7 @@ export default function DeleteCar() {
     }, []);
 
     async function getCars() {
-        await axios.get('http://192.168.0.110:3000/car/')
+        await axios.get(`http://${IP}:${PORT}/car`)
         .then(res => {
             const data = res.data.map(car => {
                 return {
@@ -35,7 +36,7 @@ export default function DeleteCar() {
         const carToDelete = cars.find(car => car.modelo.toLowerCase() === modelo.toLowerCase());
 
         if (carToDelete) {
-            await axios.delete(`http://192.168.0.110:3000/car/${carToDelete.id}`)
+            await axios.delete(`http://${IP}:${PORT}/car/${carToDelete.id}`)
             .then(res => {
                 console.log(res.data);
                 Alert.alert('Sucesso', 'Carro deletado com sucesso');

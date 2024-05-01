@@ -3,6 +3,7 @@ import { View, TextInput, Text } from 'react-native';
 import { styles } from '../../assets/css/Css';
 import { EnterButton } from '../buttons/Buttons';
 import axios from 'axios';
+import { IP, PORT } from '@env';
 
 export default function SignUp({ navigation: { navigate }}) {
     const [name, setName] = useState('')
@@ -15,9 +16,10 @@ export default function SignUp({ navigation: { navigate }}) {
             email: email,
             password: password
         }
-        await axios.post('http://192.168.0.110:3000/user', data)
+        await axios.post(`http://${IP}:${PORT}/user`, data)
         .then(res => {
             console.log(res.data);
+            alert('Conta criada com sucesso!')
             navigate("Sign In")
         })
         .catch(err => {

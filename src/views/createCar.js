@@ -3,6 +3,7 @@ import { View, TextInput } from "react-native";
 import { styles } from "../../assets/css/Css";
 import { EnterButton } from '../buttons/Buttons';
 import axios from 'axios';
+import { IP, PORT } from '@env';
 
 export default function CreateCar() {
     const [marca, setMarca] = useState('');
@@ -14,7 +15,7 @@ export default function CreateCar() {
             modelo: modelo,
             ano: ano,
         }
-        await axios.post('http://192.168.0.110:3000/car', data)
+        await axios.post(`http://${IP}:${PORT}/car`, data)
         .then(res => {
             console.log(res.data);
             alert('Carro criado com sucesso')

@@ -3,6 +3,7 @@ import { View, TextInput, Alert } from "react-native";
 import { styles } from "../../assets/css/Css";
 import { EnterButton } from '../buttons/Buttons';
 import axios from 'axios';
+import { IP, PORT } from '@env';
 
 export default function UpdateCar() {
     const [cars, setCars] = useState([]);
@@ -17,7 +18,7 @@ export default function UpdateCar() {
     }, []);
 
     async function getCars() {
-        await axios.get('http://192.168.0.110:3000/car/')
+        await axios.get(`http://${IP}:${PORT}/car`)
         .then(res => {
             setCars(res.data.map(car => ({
                 marca: car.marca,
@@ -53,7 +54,7 @@ export default function UpdateCar() {
                 ano: ano
             };
     
-            await axios.put(`http://192.168.0.110:3000/car/${carToUpdate.id}/${carToUpdate}`, updatedData)
+            await axios.put(`http://${IP}:${PORT}/car/${carToUpdate.id}/${carToUpdate}`, updatedData)
             .then(() => {
                 Alert.alert('Sucesso', 'Dados do carro atualizados com sucesso');
                 getCars();

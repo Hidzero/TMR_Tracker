@@ -8,7 +8,6 @@ const SECRET = process.env.SECRET;
 
 export async function login(req, res) {
     try {
-        // Busca o usuário pelo email usando async/await
         const user = await userSchema.findOne({ email: req.body.email });
 
         if (!user) {
@@ -21,7 +20,6 @@ export async function login(req, res) {
             });
         }
 
-        // Verifica a senha
         const validacaoPassword = bcrypt.compareSync(req.body.password, user.password);
         if (!validacaoPassword) {
             return res.status(401).json({
@@ -30,12 +28,10 @@ export async function login(req, res) {
             });
         }
 
-        // Cria o token JWT
         const token = jwt.sign({ name: user.name }, SECRET, {
-            expiresIn: 2 * 60 // Token expira em 2 minutos
+            expiresIn: 2 * 60 
         });
 
-        // Responde sucesso
         res.status(200).json({
             statusCode: 200,
             message: "Login realizado com sucesso!",
@@ -56,8 +52,7 @@ export async function login(req, res) {
 export async function verificarToken(req, res, next) {
 
     const tokenHeader = req.headers["authorization"];
-    const token = tokenHeader && tokenHeader.split(" ")[1];
-
+    const [bearer, token] = tokenHeader && tokenHeader.split(" ");
     if (!token) {
         return res.status(401).json({
             statusCode: 401,

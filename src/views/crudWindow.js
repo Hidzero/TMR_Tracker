@@ -3,10 +3,11 @@ import { View  } from "react-native";
 import { styles } from "../../assets/css/Css";
 import { SquareButton } from "../buttons/Buttons";
 import axios from 'axios';
+import { IP, PORT } from '@env';
 
 export default function CrudWindow({navigation: { navigate }}) {
     async function handleReadCar() {
-        await axios.get('http://192.168.0.110:3000/car')
+        await axios.get(`http://${IP}:${PORT}/car`)
         .then(res => {
             console.log(res.data)
             const data = res.data.map(car => {

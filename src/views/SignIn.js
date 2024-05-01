@@ -4,6 +4,10 @@ import { styles } from '../../assets/css/Css';
 import icon from '../../assets/img/icon.png';
 import { EnterButton, SignInButton, KeepMeLogged, ForgotPassword } from '../buttons/Buttons';
 import axios from 'axios';
+import { IP,PORT } from '@env';
+
+
+
 
 export default function SignIn({props, navigation: { navigate }}) {
     const [display, setDisplay] = ['none']
@@ -15,15 +19,30 @@ export default function SignIn({props, navigation: { navigate }}) {
             email: email,
             password: password
         }
-        await axios.post('http://192.168.0.110:3000/user/login', data)
-        .then(() => {
-            navigate("Crud Window")
-            alert('Login efetuado com sucesso')
-        })
+        await axios.post(`http://${IP}:${PORT}/user/login`, data)
+        .then((res) => {
+            const token = res.data.data.token
+            axios.post(`http://${IP}:${PORT}/user/private`, data, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            .then(() => {
+                navigate("Crud Window")
+                alert('Login efetuado com sucesso')
+            })
+            .catch(err => {
+                console.log(err)
+                alert('Usuario ou senha invalida')
+                setDisplay('flex')
+            })
+        }) 
         .catch(err => {
             console.log(err)
-            setDisplay('flex')
+            alert('Erro ao autenticar')
         })
+        
+        
     }
     const Entrar = 'Entrar'
     return (
