@@ -20,7 +20,6 @@ export default function SignUp({ navigation: { navigate } }) {
         };
         await axios.post(`http://${IP}:${PORT}/user`, data)
             .then(res => {
-                console.log(res.data);
                 alert('Conta criada com sucesso!');
                 navigate("Sign In");
             })
@@ -63,7 +62,7 @@ export default function SignUp({ navigation: { navigate } }) {
                     <Icon name={passwordVisible ? 'eye-slash' : 'eye'} size={24} color="grey" />
                 </TouchableOpacity>
             </View>
-            <EnterButton title={Cadastrar} onPress={handleSignUp} />
+            <EnterButton title={Cadastrar} value={Cadastrar} onPress={handleSignUp} />
         </View>
     );
 }

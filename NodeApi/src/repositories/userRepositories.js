@@ -2,10 +2,10 @@ import User from '../models/User.js';
 
 class UserRepository {
     async create(userData){
-        const user = new User(userData);
-        await user.save();
-        return user;
-    }
+        const savedUser = new User(userData);
+        await savedUser.save();
+        return savedUser;
+    }   
     async findAll(){
         return User.find();
     }

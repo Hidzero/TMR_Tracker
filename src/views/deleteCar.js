@@ -33,12 +33,11 @@ export default function DeleteCar() {
     }
 
     async function handleDeleteCar() {
-        const carToDelete = cars.find(car => car.modelo.toLowerCase() === modelo.toLowerCase());
+        const carToDelete = cars.find(car => car.modelo.toLowerCase() === modelo.toLowerCase());        
 
         if (carToDelete) {
             await axios.delete(`http://${IP}:${PORT}/car/${carToDelete.id}`)
             .then(res => {
-                console.log(res.data);
                 Alert.alert('Sucesso', 'Carro deletado com sucesso');
                 setCars(cars.filter(car => car.id !== carToDelete.id));  // Atualiza a lista local de carros
             })

@@ -17,7 +17,6 @@ export default function CreateCar() {
         }
         await axios.post(`http://${IP}:${PORT}/car`, data)
         .then(res => {
-            console.log(res.data);
             alert('Carro criado com sucesso')
         })
         .catch(err => {

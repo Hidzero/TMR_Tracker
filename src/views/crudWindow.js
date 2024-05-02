@@ -9,7 +9,6 @@ export default function CrudWindow({navigation: { navigate }}) {
     async function handleReadCar() {
         await axios.get(`http://${IP}:${PORT}/car`)
         .then(res => {
-            console.log(res.data)
             const data = res.data.map(car => {
                 return {
                     marca: car.marca,
