@@ -6,7 +6,7 @@ import axios from 'axios';
 import { IP, PORT } from '@env';
 
 export default function CrudWindow({navigation: { navigate }}) {
-    async function handleReadCar() {
+    async function handleGetCar(pageData) {
         await axios.get(`http://${IP}:${PORT}/car`)
         .then(res => {
             const data = res.data.map(car => {
@@ -16,22 +16,24 @@ export default function CrudWindow({navigation: { navigate }}) {
                     ano: car.ano
                 }
             })
-            navigate('Read Car', data)
+            navigate(String(pageData), data)
         })
         .catch(err => {
             console.log(err)
         })
     }
+
+    
      
     return (
         <View style={styles.container}>
             <View style={styles.container_squares}>
                 <SquareButton text={ 'Criar Carro'} style={styles.squares} onPress={() => navigate('Create Car')}/>
-                <SquareButton text={ 'Todos os Carros'} style={styles.squares} onPress={handleReadCar}/>
+                <SquareButton text={ 'Todos os Carros'} style={styles.squares} onPress={() => handleGetCar('Read Car')}/>
             </View>
             <View style={styles.container_squares}>
                 <SquareButton text={ 'Atualizar Carro'} style={styles.squares} onPress={() => navigate('Update Car')}/>
-                <SquareButton text={ 'Deletar Carro'} style={styles.squares} onPress={() => navigate('Delete Car')}/>
+                <SquareButton text={ 'Deletar Carro'} style={styles.squares} onPress={() => handleGetCar('Delete Car')}/>
             </View>
         </View>      
     );

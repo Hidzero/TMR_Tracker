@@ -3,7 +3,7 @@ import { View, Text, ScrollView } from "react-native";
 import { styles } from "../../assets/css/Css";
 
 export default function ReadCar(props) {
-    const cars = props.route.params;
+    const cars = props.route.params; 
 
     return (
         <ScrollView>

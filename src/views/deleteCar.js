@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, TextInput, Text, Alert } from "react-native";
+import { View, TouchableOpacity, Text, Alert, ScrollView } from "react-native";
 import { styles } from "../../assets/css/Css";
-import { EnterButton } from '../buttons/Buttons';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
 import { IP, PORT } from '@env';
 
-export default function DeleteCar() {
+export default function DeleteCar(props) {
+    const allCars = props.route.params;
     const [cars, setCars] = useState([]);
     const [modelo, setModelo] = useState(''); 
 
@@ -32,14 +33,13 @@ export default function DeleteCar() {
         });
     }
 
-    async function handleDeleteCar() {
-        const carToDelete = cars.find(car => car.modelo.toLowerCase() === modelo.toLowerCase());        
-
+    async function handleDeleteCar(carToDelete) {     
         if (carToDelete) {
             await axios.delete(`http://${IP}:${PORT}/car/${carToDelete.id}`)
-            .then(res => {
+            .then(() => {
                 Alert.alert('Sucesso', 'Carro deletado com sucesso');
-                setCars(cars.filter(car => car.id !== carToDelete.id));  // Atualiza a lista local de carros
+                // Corrigindo a atualização do estado para excluir o carro correto
+                setCars(cars.filter(existingCar => existingCar.id !== carToDelete.id));
             })
             .catch(err => {
                 console.log(err);
@@ -50,18 +50,27 @@ export default function DeleteCar() {
         }
     }
     
+    
     return (
+        <ScrollView>
         <View style={styles.container}>
-            <View style={styles.container_login2}>
-                <TextInput 
-                    style={styles.login_input}
-                    placeholder="Modelo"
-                    value={modelo}
-                    onChangeText={setModelo}
-                    autoCapitalize="none"
-                />
-                <EnterButton title="Deletar Carro" value='Deletar' style={styles.margin_button} onPress={handleDeleteCar}/>
+            <View style={{width:'90%', marginTop:20}}>
+                {cars.map((car, index) => (
+                    <View key={index} style={[styles.carContainer, { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }]}>
+                        <View style={{flex:1}}>
+                            <Text style={styles.textCarContainer}>Marca: {car.marca}</Text>
+                            <Text style={styles.textCarContainer}>Modelo: {car.modelo}</Text>
+                            <Text style={styles.textCarContainer}>Ano: {car.ano}</Text>
+                        </View>
+                        <View>
+                        <TouchableOpacity onPress={() => handleDeleteCar(car)} style={{marginRight:20}}>
+                            <Icon name='trash' size={24} color="black" />
+                        </TouchableOpacity>
+                        </View>
+                    </View>
+                ))}
             </View>
         </View>
+    </ScrollView>
     );
 }
