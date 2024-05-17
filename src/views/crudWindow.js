@@ -3,9 +3,10 @@ import { View  } from "react-native";
 import { styles } from "../../assets/css/Css";
 import { SquareButton } from "../buttons/Buttons";
 import axios from 'axios';
-import { IP, PORT } from '@env';
 
 export default function CrudWindow({navigation: { navigate }}) {
+    const IP = process.env.IP;
+    const PORT = process.env.PORT;
     async function handleGetCar(pageData) {
         await axios.get(`http://${IP}:${PORT}/car`)
         .then(res => {
@@ -34,6 +35,9 @@ export default function CrudWindow({navigation: { navigate }}) {
             <View style={styles.container_squares}>
                 <SquareButton text={ 'Atualizar Carro'} style={styles.squares} onPress={() => navigate('Update Car')}/>
                 <SquareButton text={ 'Deletar Carro'} style={styles.squares} onPress={() => handleGetCar('Delete Car')}/>
+            </View>
+            <View style={styles.container_squares}>
+                <SquareButton text={ 'To-Do List'} style={styles.squares} onPress={() => navigate('To-Do List')}/>
             </View>
         </View>      
     );

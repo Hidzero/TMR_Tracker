@@ -4,13 +4,14 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { styles } from '../../assets/css/Css';
 import { EnterButton } from '../buttons/Buttons';
 import axios from 'axios';
-import { IP, PORT } from '@env';
 
 export default function SignUp({ navigation: { navigate } }) {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const IP = process.env.IP;
+    const PORT = process.env.PORT;
 
     async function handleSignUp() {
         const data = {

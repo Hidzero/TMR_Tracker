@@ -3,12 +3,14 @@ import { View, TextInput } from "react-native";
 import { styles } from "../../assets/css/Css";
 import { EnterButton } from '../buttons/Buttons';
 import axios from 'axios';
-import { IP, PORT } from '@env';
 
 export default function CreateCar() {
     const [marca, setMarca] = useState('');
     const [modelo, setModelo] = useState('');
     const [ano, setAno] = useState('');
+    const IP = process.env.IP;
+    const PORT = process.env.PORT;
+    
     async function handleCreateCar() {
         const data = {
             marca: marca,

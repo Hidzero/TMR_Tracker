@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Home, SignIn, ForgotPassword, SignUp, CrudWindow, CreatCar, ReadCar, UpdateCar, DeleteCar } from './src/views/index';
+import { Home, SignIn, ForgotPassword, SignUp, CrudWindow, CreatCar, ReadCar, UpdateCar, DeleteCar, TodoList } from './src/views/index';
 
 export default function App() {
 
@@ -19,6 +19,7 @@ export default function App() {
         <Stack.Screen name="Read Car" component={ReadCar} />
         <Stack.Screen name="Update Car" component={UpdateCar} />
         <Stack.Screen name="Delete Car" component={DeleteCar} />
+        <Stack.Screen name="To-Do List" component={TodoList} />
       </Stack.Navigator>
     </NavigationContainer>
   );

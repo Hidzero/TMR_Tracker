@@ -3,7 +3,6 @@ import { View, TextInput, Alert } from "react-native";
 import { styles } from "../../assets/css/Css";
 import { EnterButton } from '../buttons/Buttons';
 import axios from 'axios';
-import { IP, PORT } from '@env';
 
 export default function UpdateCar() {
     const [cars, setCars] = useState([]);
@@ -11,6 +10,8 @@ export default function UpdateCar() {
     const [marca, setMarca] = useState('');
     const [ano, setAno] = useState('');
     const [carToUpdate, setCarToUpdate] = useState(null);
+    const IP = process.env.IP;
+    const PORT = process.env.PORT;
 
 
     useEffect(() => {

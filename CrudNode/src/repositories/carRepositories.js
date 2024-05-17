@@ -12,8 +12,8 @@ class CarRepository {
     async findById(id) {
         return Car.findById(id);
     }
-    async updateById(id, carData) {
-        return Car.findByIdAndUpdate(id, carData, { new: true })
+    async updateById(id, userData) {
+        return Car.findByIdAndUpdate(id, userData, { new: true })
     }
     async deleteById(id) {
         return Car.findByIdAndDelete(id)

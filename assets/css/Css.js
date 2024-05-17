@@ -218,6 +218,75 @@ const styles = StyleSheet.create({
       fontSize: 20,
       fontWeight: 'bold',
     },
+    appTodo: {
+      flex: 1,
+      padding: 20,
+      backgroundColor: '#fff'
+  },
+  header: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: 20
+  },
+  clipboardIcon: {
+      fontSize: 24,
+      marginRight: 10
+  },
+  title: {
+      fontSize: 24,
+      fontWeight: 'bold'
+  },
+  inputGroup: {
+      flexDirection: 'row',
+      marginBottom: 20
+  },
+  input: {
+      flex: 1,
+      borderColor: '#ccc',
+      borderWidth: 1,
+      padding: 10,
+      marginRight: 10,
+      borderRadius: 5
+  },
+  task: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: 10,
+      borderBottomWidth: 1,
+      borderBottomColor: '#ccc'
+  },
+  completed: {
+      textDecorationLine: 'line-through'
+  },
+  checkbox: {
+      fontSize: 24,
+      marginRight: 10
+  },
+  inputEdit: {
+      flex: 1,
+      borderColor: '#ccc',
+      borderWidth: 1,
+      padding: 10,
+      borderRadius: 5
+  },
+  textDescription: {
+      flex: 1
+  },
+  trashIcon: {
+      fontSize: 24,
+      color: '#ff0000'
+  },
+  button: {
+      width: 50,
+      height: 50,
+      borderRadius: 6,
+      backgroundColor: 'grey',
+  },
+  buttonText: {
+      color: 'white',
+      textAlign: 'center',
+      lineHeight: 50,
+  }
   });
   
 export { styles };

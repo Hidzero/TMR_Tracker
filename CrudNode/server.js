@@ -4,7 +4,6 @@ const app = express();
 import cors from 'cors';
 app.use(cors());
 
-import { config } from 'dotenv';
 const port = process.env.PORT
 
 app.use(express.json());
@@ -18,7 +17,13 @@ app.use('/user', userRoutes);
 import carRoutes from './src/routes/carRoutes.js';
 app.use('/car', carRoutes);
 
+import taskRoutes from './src/routes/taskRoutes.js';
+app.use('/task', taskRoutes);
+
+import noteRoutes from './src/routes/noteRoutes.js';
+app.use('/note', noteRoutes);
+
 app.listen(port, () => {
-    console.log(`link: http://localhost:${port}/user`);
+    console.log(`link: http://localhost:${port}/`);
 })
 

@@ -3,12 +3,11 @@ import { View, TouchableOpacity, Text, Alert, ScrollView } from "react-native";
 import { styles } from "../../assets/css/Css";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
-import { IP, PORT } from '@env';
 
 export default function DeleteCar(props) {
-    const allCars = props.route.params;
     const [cars, setCars] = useState([]);
-    const [modelo, setModelo] = useState(''); 
+    const IP = process.env.IP;
+    const PORT = process.env.PORT;
 
     useEffect(() => {
         getCars();

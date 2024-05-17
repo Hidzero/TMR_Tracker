@@ -5,7 +5,6 @@ import { styles } from '../../assets/css/Css';
 import icon from '../../assets/img/icon.png';
 import { EnterButton, SignInButton, KeepMeLogged, ForgotPassword } from '../buttons/Buttons';
 import axios from 'axios';
-import { IP,PORT } from '@env';
 
 
 
@@ -15,6 +14,8 @@ export default function SignIn({props, navigation: { navigate }}) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [passwordVisible, setPasswordVisible] = useState(false);
+    const IP = process.env.IP;
+    const PORT = process.env.PORT;
 
     async function handleSignIn() {
         const data = {
