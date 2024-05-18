@@ -57,7 +57,7 @@ export async function updateTask(req, res) {
 
 export async function deleteTask(req, res){
     try {
-        const deleteTask = await taskRepositories.delete(req.params.id);
+        await taskRepositories.delete(req.params.id);
         res.status(200).json({message: "Tarefa deletada com sucesso"});
     }
     catch (error){

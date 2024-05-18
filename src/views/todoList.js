@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity, FlatList } from 'react-native';
+import { Text, View, TextInput, TouchableOpacity } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faClipboardCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { styles } from '../../assets/css/Css';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 export default function TodoList() {
     const [tasks, setTasks] = useState([]);
@@ -41,12 +42,10 @@ export default function TodoList() {
         });
     }
 
-    async function deleteTaskFromDB(taskData, index) {
-        const baseUrl = `http://${IP}:${PORT}/task/${taskData._id}`;
-        await axios.delete(baseUrl)
+    async function deleteTaskFromDB(task) {
+        await axios.delete(`http://${IP}:${PORT}/task/${task._id}`)
         .then(() => {
-            const updatedTasks = tasks.filter((task, idx) => idx !== index);
-            setTasks(updatedTasks);
+            setTasks(tasks.filter(t => t._id !== task._id));
         }).catch(error => {
             console.log(error);
         });
@@ -63,23 +62,20 @@ export default function TodoList() {
         });
     }
 
-    function addTask() {
+    async function addTask() {
         if (inputValue.trim() !== '') {
-            const newTask = {
-                description: inputValue,
-                completed: false
-            };
-            setTasks([...tasks, newTask]);
             createTask();
             setInputValue('');
+            getTasks();
         }
     };
 
-    function markDone(index) {
+    async function markDone(index) {
         const updatedTasks = tasks.map((task, idx) => {
             if (idx === index) {
                 const updatedTask = { ...task, completed: !task.completed };
                 updateTask(updatedTask);
+                getTasks();
                 return updatedTask;
             }
             return task;
@@ -92,15 +88,16 @@ export default function TodoList() {
         setTasks(sortedTasks);
     }
 
-    function handleKeyDown(e) {
+    async function handleKeyDown(e) {
         if (e.nativeEvent.key === 'Enter') {
             addTask();
         }
     }
     
-    function startEditing(task, index) {
+    async function startEditing(task, index) {
         setEditingIndex(index);
         setEditText(task.description);
+        saveEdit(task, index);
     }
 
     async function saveEdit(task, index) {
@@ -110,7 +107,7 @@ export default function TodoList() {
             await axios.put(baseUrl, updatedTask);
             const updatedTasks = tasks.map((t, idx) => idx === index ? updatedTask : t);
             setTasks(updatedTasks);
-            setEditingIndex(null); // Sair do modo de edição
+            setEditingIndex(null);
             setEditText('');
         } catch (error) {
             console.error(error);
@@ -135,32 +132,29 @@ export default function TodoList() {
                     <Text style={styles.buttonText}>Add</Text>
                 </TouchableOpacity>
             </View>
-            <FlatList
-                data={tasks}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={({ item, index }) => (
-                    <View style={[styles.task, item.completed ? styles.completed : null]}>
-                        <TouchableOpacity onPress={() => markDone(index)}>
-                            <Text style={styles.checkbox}>{item.completed ? '☑' : '☐'}</Text>
-                        </TouchableOpacity>
-                        {editingIndex === index ? (
-                            <TextInput
-                                style={styles.inputEdit}
-                                value={editText}
-                                onChangeText={setEditText}
-                                onSubmitEditing={() => saveEdit(item, index)}
-                            />
-                        ) : (
-                            <Text style={styles.textDescription} onPress={() => startEditing(item, index)}>
-                                {item.description}
-                            </Text>
-                        )}
-                        <TouchableOpacity onPress={() => deleteTaskFromDB(item, index)}>
-                            <FontAwesomeIcon icon={faTrash} style={styles.trashIcon} />
-                        </TouchableOpacity>
-                    </View>
-                )}
-            />
+            {tasks.map((task, index) => (
+                <View key={index} style={[styles.task, task.completed ? styles.completed : null]}>
+                    <TouchableOpacity onPress={() => markDone(index)}>
+                        <Text style={styles.checkbox}>{task.completed ? '☑' : '☐'}</Text>
+                    </TouchableOpacity>
+                    {editingIndex === index ? (
+                        <TextInput
+                            style={styles.inputEdit}
+                            value={editText}
+                            onChangeText={setEditText}
+                            onSubmitEditing={() => saveEdit(task, index)}
+                        />
+                    ) : (
+                        <Text style={styles.textDescription} onPress={() => startEditing(task, index)}>
+                            {task.description}
+                        </Text>
+                    )}
+                    <TouchableOpacity onPress={() => deleteTaskFromDB(task)}>
+                        <FontAwesomeIcon icon={faTrash} style={styles.trashIcon} />
+                    </TouchableOpacity>
+                </View>
+            ))}
         </View>
     );
 }
+
