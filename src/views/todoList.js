@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faClipboardCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import { styles } from '../../assets/css/Css';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 export default function TodoList() {
     const [tasks, setTasks] = useState([]);
@@ -23,8 +22,7 @@ export default function TodoList() {
             description: inputValue,
             completed: false
         };
-        const baseUrl = `http://${IP}:${PORT}/task`;
-        await axios.post(baseUrl, data)
+        await axios.post(`http://${IP}:${PORT}/task`, data)
         .then(response => {
             setTasks([...tasks, { ...data, _id: response.data._id }]);
         }).catch(error => {
@@ -33,8 +31,7 @@ export default function TodoList() {
     }
 
     async function getTasks() {
-        const baseUrl = `http://${IP}:${PORT}/task`;
-        await axios.get(baseUrl)
+        await axios.get(`http://${IP}:${PORT}/task`)
         .then(response => {
             setTasks(response.data);
         }).catch(error => {
@@ -55,8 +52,7 @@ export default function TodoList() {
         const data = {
             completed: taskData.completed
         };
-        const baseUrl = `http://${IP}:${PORT}/task/${taskData._id}`;
-        await axios.put(baseUrl, data)
+        await axios.put(`http://${IP}:${PORT}/task/${taskData._id}`, data)
         .catch(error => {
             console.log(error);
         });
@@ -66,7 +62,6 @@ export default function TodoList() {
         if (inputValue.trim() !== '') {
             createTask();
             setInputValue('');
-            getTasks();
         }
     };
 
@@ -75,7 +70,6 @@ export default function TodoList() {
             if (idx === index) {
                 const updatedTask = { ...task, completed: !task.completed };
                 updateTask(updatedTask);
-                getTasks();
                 return updatedTask;
             }
             return task;
@@ -97,7 +91,6 @@ export default function TodoList() {
     async function startEditing(task, index) {
         setEditingIndex(index);
         setEditText(task.description);
-        saveEdit(task, index);
     }
 
     async function saveEdit(task, index) {
