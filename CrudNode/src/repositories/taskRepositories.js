@@ -16,7 +16,7 @@ class TaskRepository {
     }
 
     async update(id, updateData) {
-        return Task.findOneAndUpdate({ _id: id }, updateData, { new: true });
+        return Task.findByIdAndUpdate({ _id: id }, updateData, { new: true });
     }
 
     async delete(id) {

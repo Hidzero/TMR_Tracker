@@ -25,6 +25,7 @@ export default function TodoList() {
         await axios.post(`http://${IP}:${PORT}/task`, data)
         .then(response => {
             setTasks([...tasks, { ...data, _id: response.data._id }]);
+            getTasks();
         }).catch(error => {
             console.log(error);
         });
@@ -43,6 +44,7 @@ export default function TodoList() {
         await axios.delete(`http://${IP}:${PORT}/task/${task._id}`)
         .then(() => {
             setTasks(tasks.filter(t => t._id !== task._id));
+            getTasks();
         }).catch(error => {
             console.log(error);
         });
@@ -53,7 +55,9 @@ export default function TodoList() {
             completed: taskData.completed
         };
         await axios.put(`http://${IP}:${PORT}/task/${taskData._id}`, data)
-        .catch(error => {
+        .then(() => {
+            getTasks();
+        }).catch(error => {
             console.log(error);
         });
     }
